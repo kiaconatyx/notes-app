@@ -1,12 +1,16 @@
+import controllers.NoteAPI
+import models.Note
 import mu.KotlinLogging
 import utils.ScannerInput
+import utils.ScannerInput.readNextInt
+import utils.ScannerInput.readNextLine
 import java.lang.System.exit
+
 private val logger = KotlinLogging.logger {}
 private val noteAPI = NoteAPI()
 
 fun main(args: Array<String>) {
     runMenu()
-
 }
 
 fun mainMenu() : Int {
@@ -67,6 +71,6 @@ fun deleteNote(){
 }
 
 fun exitApp(){
-    println("Exiting...bye")
+    logger.info { "exitApp() function invoked" }
     exit(0)
 }
