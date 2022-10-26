@@ -5,4 +5,3 @@ data class Note(val noteTitle: String,
                 val noteCategory: String,
                 val isNoteArchived :Boolean){
 }
-

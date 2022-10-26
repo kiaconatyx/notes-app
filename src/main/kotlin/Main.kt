@@ -5,12 +5,12 @@ import utils.ScannerInput
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import java.lang.System.exit
+
 private val logger = KotlinLogging.logger {}
 private val noteAPI = NoteAPI()
 
 fun main(args: Array<String>) {
     runMenu()
-
 }
 
 fun mainMenu() : Int {
@@ -67,10 +67,22 @@ fun updateNote(){
 }
 
 fun deleteNote(){
-    logger.info { "deleteNote() function invoked" }
+    //logger.info { "deleteNotes() function invoked" }
+    listNotes()
+    if (noteAPI.numberOfNotes() > 0) {
+        //only ask the user to choose the note to delete if notes exist
+        val indexToDelete = readNextInt("Enter the index of the note to delete: ")
+        //pass the index of the note to NoteAPI for deleting and check for success.
+        val noteToDelete = noteAPI.deleteNote(indexToDelete)
+        if (noteToDelete != null) {
+            println("Delete Successful! Deleted note: ${noteToDelete.noteTitle}")
+        } else {
+            println("Delete NOT Successful")
+        }
+    }
 }
 
 fun exitApp(){
-    println("Exiting...bye")
+    logger.info { "exitApp() function invoked" }
     exit(0)
 }
