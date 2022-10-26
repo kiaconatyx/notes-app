@@ -71,7 +71,7 @@ fun deleteNote(){
     listNotes()
     if (noteAPI.numberOfNotes() > 0) {
         //only ask the user to choose the note to delete if notes exist
-        val indexToDelete = readNextInt("Enter the index of the note to delete: ")
+        val indexToDelete = readNextInt("Enter the index of the note you wish to delete: ")
         //pass the index of the note to NoteAPI for deleting and check for success.
         val noteToDelete = noteAPI.deleteNote(indexToDelete)
         if (noteToDelete != null) {
