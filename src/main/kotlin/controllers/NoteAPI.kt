@@ -45,7 +45,19 @@ class NoteAPI(serializerType: Serializer){
         }
         return false
     }
-
+    fun listActiveNotes(): String {
+        return if (numberOfActiveNotes() == 0) {
+            "No active notes stored"
+        } else {
+            var listOfActiveNotes = ""
+            for (note in notes) {
+                if (!note.isNoteArchived) {
+                    listOfActiveNotes += "${notes.indexOf(note)}: $note \n"
+                }
+            }
+            listOfActiveNotes
+        }
+    }
     fun listAllNotes(): String =
         if  (notes.isEmpty()) "No notes stored"
         else notes.joinToString (separator = "\n") { note ->
@@ -79,6 +91,11 @@ class NoteAPI(serializerType: Serializer){
         }
     }
 
+    fun searchByTitle (searchString : String) =
+        notes.filter { note -> note.noteTitle.contains(searchString, ignoreCarse = true) }
+            .joinToString (separator = "\n") { note ->
+                notes.indexOf(note) .toString() + ": " + note.toString()
+            }
     fun numberOfNotes(): Int = notes.size
 
     fun numberOfArchivedNotes(): Int = notes.count{note: Note -> note.isNoteArchived}
