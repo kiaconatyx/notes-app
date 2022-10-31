@@ -18,3 +18,9 @@ Features:
 
 5.Logging capabilities are implemented using MicroUtils Kotlin-Logging
 ScannerInput utility available for robust user I/O.
+
+6.Update, Delete, and Archive Notes.
+
+7. Persistence using XML/JSON
+
+8. Listing of all, active and archived notes.
