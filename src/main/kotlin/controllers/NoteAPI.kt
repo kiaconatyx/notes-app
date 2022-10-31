@@ -91,11 +91,10 @@ class NoteAPI(serializerType: Serializer){
         }
     }
 
-    fun searchByTitle (searchString : String) =
-        notes.filter { note -> note.noteTitle.contains(searchString, ignoreCarse = true) }
-            .joinToString (separator = "\n") { note ->
-                notes.indexOf(note) .toString() + ": " + note.toString()
-            }
+    fun searchByTitle(searchString : String) =
+        notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true)}
+            .joinToString (separator = "\n") {
+                    note ->  notes.indexOf(note).toString() + ": " + note.toString() }
     fun numberOfNotes(): Int = notes.size
 
     fun numberOfArchivedNotes(): Int = notes.count{note: Note -> note.isNoteArchived}
@@ -128,5 +127,6 @@ class NoteAPI(serializerType: Serializer){
     fun store() {
         serializer.write(notes)
     }
+
 
 }
