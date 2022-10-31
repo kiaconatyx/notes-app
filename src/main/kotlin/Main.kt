@@ -167,7 +167,7 @@ fun load() {
     try {
         noteAPI.load()
     } catch (e: Exception) {
-        System.err.println("Error reading from file: $e")
+        System.err.println("Error reading from this file: $e")
     }
 }
 
