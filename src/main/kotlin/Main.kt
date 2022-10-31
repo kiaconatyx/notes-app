@@ -155,8 +155,6 @@ fun archiveNote() {
     }
 }
 
-
-
 fun save() {
     try {
         noteAPI.store()
