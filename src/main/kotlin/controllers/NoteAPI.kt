@@ -66,6 +66,13 @@ class NoteAPI(serializerType: Serializer){
             else "${numberOfNotesByPriority(priority)} notes with priority $priority: $listOfNotes"
         }
 
+    fun listNotesBySelectedCategory(cat: String): String =
+        if (notes.isEmpty()) "No Notes Stored"
+    else {
+        val listOfNotes = formatListString(notes.filter{ note -> note.noteCategory == cat})
+            if (listOfNotes.equals("")) "No notes with category: $cat"
+            else "${numberOfNotesByCategory(cat)} notes with category $cat: $listOfNotes"
+        }
     fun searchByTitle (searchString : String) =
         formatListString(
             notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
@@ -76,6 +83,7 @@ class NoteAPI(serializerType: Serializer){
     fun numberOfActiveNotes(): Int = notes.count{note: Note -> !note.isNoteArchived}
 
     fun numberOfNotesByPriority(priority: Int): Int = notes.count { p: Note -> p.notePriority == priority }
+    fun numberOfNotesByCategory(cat: String): Int = notes.count { p: Note -> p.noteCategory == cat }
 
     fun findNote(index: Int): Note? {
         return if (isValidListIndex(index, notes)) {

@@ -165,6 +165,45 @@ class NoteAPITest {
         }
     }
 
+    @Test
+    fun `listNotesBySelectedCategory returns No Notes when ArrayList is empty`() {
+        assertEquals(0, emptyNotes!!.numberOfNotes())
+        assertTrue(emptyNotes!!.listNotesBySelectedCategory("Work").lowercase().contains("no notes")
+        )
+    }
+
+    @Test
+    fun `listNotesBySelectedCategory returns no notes when no notes of that category exist`() {
+        //Category 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
+        assertEquals(5, populatedNotes!!.numberOfNotes())
+        val category2String = populatedNotes!!.listNotesBySelectedCategory("Work").lowercase()
+        assertTrue(category2String.contains("no notes"))
+        assertTrue(category2String.contains("2"))
+    }
+    @Test
+    fun `listNotesBySelectedCategory returns all notes that match that category when notes of that category exist`() {
+        //Category 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
+        assertEquals(5, populatedNotes!!.numberOfNotes())
+        val category1String = populatedNotes!!.listNotesBySelectedCategory("Hobby").lowercase()
+        assertTrue(category1String.contains("1 note"))
+        assertTrue(category1String.contains("category 1"))
+        assertTrue(category1String.contains("summer holiday"))
+        assertFalse(category1String.contains("swim"))
+        assertFalse(category1String.contains("learning kotlin"))
+        assertFalse(category1String.contains("code app"))
+        assertFalse(category1String.contains("test app"))
+
+        val category4String = populatedNotes!!.listNotesBySelectedCategory("Work").lowercase()
+        assertTrue(category4String.contains("2 note"))
+        assertTrue(category4String.contains("priority 4"))
+        assertFalse(category4String.contains("swim"))
+        assertTrue(category4String.contains("code app"))
+        assertTrue(category4String.contains("test app"))
+        assertFalse(category4String.contains("learning kotlin"))
+        assertFalse(category4String.contains("summer holiday"))
+    }
+
+
     @Nested
     inner class DeleteNotes {
 

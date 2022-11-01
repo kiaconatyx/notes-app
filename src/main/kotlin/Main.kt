@@ -2,7 +2,6 @@ import controllers.NoteAPI
 import models.Note
 import mu.KotlinLogging
 import persistence.JSONSerializer
-import persistence.XMLSerializer
 import utils.ScannerInput
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
@@ -29,6 +28,7 @@ fun mainMenu() : Int {
          > |   4) Delete a note                |
          > |   5) Archive a note               |
          > |   6) Search note(by description)  |
+         > |   7) View note(by category)       |
          > -------------------------------------
          > |   20) Save notes                  |
          > |   21) Load notes                  |
@@ -48,6 +48,7 @@ fun runMenu() {
             4  -> deleteNote()
             5 -> archiveNote()
             6 -> searchNotes()
+            7 -> viewNote()
             20  -> save()
             21  -> load()
             0  -> exitApp()
@@ -153,6 +154,10 @@ fun searchNotes() {
     }
 }
 
+fun viewNote() {
+    val viewCat = readNextLine( "Enter the category to search by: ")
+    println(noteAPI.listNotesBySelectedCategory(viewCat))
+}
 fun archiveNote() {
     listActiveNotes()
     if (noteAPI.numberOfActiveNotes() > 0) {
