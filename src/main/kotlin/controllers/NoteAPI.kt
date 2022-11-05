@@ -3,6 +3,7 @@ package controllers
 import models.Note
 import persistence.Serializer
 
+//pass serializer object from NoteAPI to Main.kt
 class NoteAPI(serializerType: Serializer){
 
     private var serializer: Serializer = serializerType
@@ -13,12 +14,14 @@ class NoteAPI(serializerType: Serializer){
         return notes.add(note)
     }
 
+    //delete functionality
     fun deleteNote(indexToDelete: Int): Note? {
         return if (isValidListIndex(indexToDelete, notes)) {
             notes.removeAt(indexToDelete)
         } else null
     }
 
+    //update functionality
     fun updateNote(indexToUpdate: Int, note: Note?): Boolean {
         //find the note object by the index number
         val foundNote = findNote(indexToUpdate)
@@ -35,6 +38,7 @@ class NoteAPI(serializerType: Serializer){
         return false
     }
 
+    //archiveNote functionality
     fun archiveNote(indexToArchive: Int): Boolean {
         if (isValidIndex(indexToArchive)) {
             val noteToArchive = notes[indexToArchive]
@@ -45,6 +49,8 @@ class NoteAPI(serializerType: Serializer){
         }
         return false
     }
+
+    //listallactivenotes funtionality
     fun listActiveNotes(): String =
         if  (numberOfActiveNotes() == 0)  "No active notes stored"
         else formatListString(notes.filter { note -> !note.isNoteArchived})
@@ -59,6 +65,7 @@ class NoteAPI(serializerType: Serializer){
 
 
     fun listNotesBySelectedPriority(priority: Int): String =
+        //if notes is empty "no notes stored" is returned
         if (notes.isEmpty()) "No notes stored"
         else {
             val listOfNotes = formatListString(notes.filter{ note -> note.notePriority == priority})
@@ -110,6 +117,8 @@ class NoteAPI(serializerType: Serializer){
         serializer.write(notes)
     }
 
+
+//joinString becomes helper code
     private fun formatListString(notesToFormat : List<Note>) : String =
         notesToFormat
             .joinToString (separator = "\n") { note ->
